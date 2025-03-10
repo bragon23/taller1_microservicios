@@ -14,6 +14,7 @@ import reactor.test.StepVerifier;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -169,7 +170,9 @@ public class OrderServiceTest {
 
         // Then
         StepVerifier.create(result)
-                .verifyComplete();
+                .expectErrorMatches(throwable ->
+                        throwable instanceof NoSuchElementException)
+                .verify();
 
         verify(orderRepository).existsById("999");
         verify(orderRepository, never()).deleteById(any());

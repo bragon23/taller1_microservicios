@@ -26,7 +26,6 @@ public class OrderService {
     }
 
     public Mono<Order> createOrder(Order order){
-        order.setId(UUID.randomUUID().toString());
         return Mono.defer(() -> Mono.just(orderRepository.save(order)))
                 .subscribeOn(Schedulers.boundedElastic());
     }
