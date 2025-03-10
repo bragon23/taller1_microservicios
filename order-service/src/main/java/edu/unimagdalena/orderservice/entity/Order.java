@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -19,9 +20,9 @@ public class Order {
 
     private String productName;
 
-    private int quantity;
+    private Integer quantity;
 
-    private double price;
+    private BigDecimal price;
 
     @Column(name = "date", nullable = false, updatable = false)
     private LocalDateTime date;
