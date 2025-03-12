@@ -1,5 +1,6 @@
 package edu.unimagdalena.productservice.respository;
 
+
 import edu.unimagdalena.productservice.entity.Product;
 import edu.unimagdalena.productservice.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
@@ -67,3 +68,4 @@ public class ProductRepositoryTest {
         assertThat(foundProduct.get().getName()).isEqualTo("Test Product");
     }
 }
+

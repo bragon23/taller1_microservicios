@@ -2,6 +2,7 @@ package edu.unimagdalena.productservice.entity;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -13,6 +14,7 @@ import java.math.BigDecimal;
 
 @Document(collection = "products")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product {
