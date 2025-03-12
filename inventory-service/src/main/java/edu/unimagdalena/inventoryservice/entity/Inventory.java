@@ -1,6 +1,7 @@
 package edu.unimagdalena.inventoryservice.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "inventory")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Inventory {
