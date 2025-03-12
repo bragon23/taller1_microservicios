@@ -76,7 +76,7 @@ services:
 
   # PAYMENT MICROSERVICE
   payment-service:
-    build: ./payment-service
+    build: paymentservice
     ports:
       - "8083:8080"
     environment:
