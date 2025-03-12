@@ -1,34 +1,50 @@
 package edu.unimagdalena.productservice.controller;
 
 import edu.unimagdalena.productservice.entity.Product;
-import edu.unimagdalena.productservice.services.ProductServices;
+import edu.unimagdalena.productservice.service.ProductService;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/products")
-
+@RequestMapping("/api/products")
 public class ProductController {
 
-    private final ProductServices productService;
-    public ProductController(ProductServices productService) {
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
+
     @GetMapping
     public Flux<Product> getAllProducts() {
-        return productService.findAll();
+        return productService.getAllProducts();
+    }
+
+    @GetMapping("/{id}")
+    public Mono<Product> getProductById(@PathVariable String id) {
+        return productService.getProductById(id);
     }
 
     @PostMapping
-    public Mono<ResponseEntity<Product>> save(@RequestBody Product product) {
-        System.out.println(product);
-        return productService.save(product)
-                .map(ResponseEntity::ok)
-                .defaultIfEmpty(ResponseEntity.status(500).build());
+    @ResponseStatus(HttpStatus.CREATED)
+    public Mono<Product> createProduct(@RequestBody Product product) {
+        return productService.createProduct(product);
+    }
+
+    @PutMapping("/{id}")
+    public Mono<Product> updateProduct(@PathVariable String id, @RequestBody Product product) {
+        return productService.updateProduct(id, product);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Mono<Void> deleteProduct(@PathVariable String id) {
+        return productService.deleteProduct(id);
     }
 }
