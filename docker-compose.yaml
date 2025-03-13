@@ -1,7 +1,9 @@
 services:
   # ORDER MICROSERVICE
   order-service:
-    build: ./order-service
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
     environment:
