@@ -10,6 +10,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://order-db:5432/orderdb
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
+      - SERVER_PORT=8080
     depends_on:
       - order-db
     networks:
@@ -32,9 +33,10 @@ services:
   product-service:
     build: ./product-service
     ports:
-      - "8081:8080"
-    environment:
+      - "8081:8081" #Debe exponerse tanto internamente como para el cliente en otro puerto supone que es porque utiliza una base de datos no relacional
+    environment:    #Pero no sabe si esa es la razon  ya que de esta forma fue que funciono
       - SPRING_DATA_MONGODB_URI=mongodb://product-db:27017/productdb
+      - SERVER_PORT=8081
     depends_on:
       - product-db
     networks:
@@ -48,7 +50,6 @@ services:
       - product-data:/data/db
     networks:
       - microservices-network
-
   # INVENTORY MICROSERVICE
   inventory-service:
     build: ./inventory-service
@@ -58,6 +59,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://inventory-db:5432/inventorydb
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
+      - SERVER_PORT=8080
     depends_on:
       - inventory-db
     networks:
@@ -78,13 +80,14 @@ services:
 
   # PAYMENT MICROSERVICE
   payment-service:
-    build: paymentservice
+    build: ./payment-service
     ports:
       - "8083:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://payment-db:5432/paymentdb
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
+      - SERVER_PORT=8080
     depends_on:
       - payment-db
     networks:
@@ -112,3 +115,4 @@ volumes:
   product-data:
   inventory-data:
   payment-data:
+
